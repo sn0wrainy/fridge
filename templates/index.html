@@ -10,7 +10,9 @@
     </div>
     <div class="container">
         <div class="left bgwhite">
-            <p>Składniki</p>
+            <p>{% for ingredient in ingredients %}
+                <input type="checkbox" value="{{ ingredient.id }}" name="ingredients">{{ ingredient }}<br>
+                {% endfor %}</p>
         </div>
         <div class="right bgwhite">
             <p>Propozycje przepisów</p>
