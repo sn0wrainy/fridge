@@ -17,9 +17,13 @@
     </div>
     <div class="container">
         <div class="left bgwhite">
-            <p>{% for ingredient in ingredients %}
+            <p>{% for type in types %}
+                <b>{{ type.name }}</b></br>
+                {% for ingredient in type.ingredients.all %}
                 <input type="checkbox" class="ingredient" value="{{ ingredient.id }}" name="ingredients">{{ ingredient }}<br>
-                {% endfor %}</p>
+                {% endfor %}
+            {% endfor %}
+            </p>
         </div>
         <div class="right bgwhite">
             <p>Propozycje przepisów</p>

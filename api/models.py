@@ -1,36 +1,24 @@
 from django.db import models
 
-class Ingredient(models.Model):
 
-    VEGETABLES = 0
-    FRUITS = 1
-    GRAINS = 2
-    DAIRY = 3
-    SWEETENERS = 4
-    SPICES = 5
-    OILS = 6
-    LEGUMES = 7
-    NUTS = 8
-    ALCOHOL = 9
-
-    INGREDIENT_TYPE = (
-        (VEGETABLES, "warzywa"),
-        (FRUITS, "owoce"),
-        (GRAINS, "zboża"),
-        (DAIRY, "alternatywy nabiału"),
-        (SWEETENERS, "słodziki"),
-        (SPICES, "przyprawy"),
-        (OILS, "tłuszcze"),
-        (LEGUMES, "strączki"),
-        (NUTS, "orzechy"),
-        (ALCOHOL, "alkohol")
-    )
-
-    name = models.CharField(max_length=64, unique=True)
-    type = models.IntegerField(choices=INGREDIENT_TYPE)
+class IngredientsType(models.Model):
+    name = models.CharField(max_length=24)
 
     def __str__(self):
         return self.name
+
+
+class Ingredient(models.Model):
+
+    name = models.CharField(max_length=64, unique=True)
+    type = models.ForeignKey(IngredientsType, on_delete=models.CASCADE, related_name="ingredients")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["name"]
+
 
 class Category(models.Model):
     class Meta:
@@ -41,6 +29,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Recipe(models.Model):
     name = models.CharField(max_length=128)
