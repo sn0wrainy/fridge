@@ -8,7 +8,7 @@ from django_filters import rest_framework as filters
 class AvailableIngredientsFilter(filters.Filter):
     def filter(self, qs, value):
         if not value:
-            return qs
+            return Recipe.objects.none()
 
         available = value.split(",")
         missing = Ingredient.objects.exclude(id__in = available)
