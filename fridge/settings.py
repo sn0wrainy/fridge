@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+from decouple import config, Csv
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'r^4te=5()y5p3r$j_7^t)p01yl@_k+y5^cairp84a8x3r&m@+z'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", cast=bool, default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
@@ -80,11 +80,11 @@ WSGI_APPLICATION = 'fridge.wsgi.application'
 
 DATABASES = {
     'default': {
-        'HOST': '127.0.0.1',
-        'NAME': 'fridge',
+        'HOST': config("DB_HOST"),
+        'NAME': config("DB_NAME"),
         'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'fridge-user',
-        'PASSWORD': 'p4ssw0rd',
+        'USER': config("DB_USER"),
+        'PASSWORD': config("DB_PASS"),
     }
 }
 
